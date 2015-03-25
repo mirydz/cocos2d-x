@@ -321,9 +321,9 @@ void Grid3D::beforeBlit()
         GLboolean depthWriteMask;
         glGetBooleanv(GL_DEPTH_WRITEMASK, &depthWriteMask);
 		_oldDepthWriteValue = depthWriteMask != GL_FALSE;
-        CHECK_GL_ERROR_DEBUG();
         glEnable(GL_DEPTH_TEST);
         glDepthMask(true);
+        GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
     }
 }
 
@@ -331,10 +331,6 @@ void Grid3D::afterBlit()
 {
     if(_needDepthTestForBlit)
     {
-        if(_oldDepthTestValue)
-            glEnable(GL_DEPTH_TEST);
-        else
-            glDisable(GL_DEPTH_TEST);
         
         glDepthMask(_oldDepthWriteValue);
     }
